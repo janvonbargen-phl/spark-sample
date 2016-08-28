@@ -10,7 +10,7 @@
 
 **Steps**
 
-1. Clone, and set up cluster (standalone type) of one master & one worker (2 cores, 1024.0 MB RAM):
+1. Clone from https://github.com/gettyimages/docker-spark, and set up cluster (standalone type) of one master & one worker (2 cores, 1024.0 MB RAM):
 
 ```bash
 git clone https://github.com/gettyimages/docker-spark.git
@@ -66,6 +66,33 @@ Worker Ports:
 * 7012-7016: See conf/worker/spark-defaults.conf
 * 8081: Web UI (http://localhost:8081/) - standalone mode only
 * 8881: Spark Worker Port
+
+## Run Example
+
+This should run one of the packages examples on the cluster set up before.
+
+1. Download Spark, and install locally:
+
+* Download from http://spark.apache.org/downloads.html (Release 2.0.0, Type "Pre-built for Hadoop 2.7 and later")
+* Copy to some directory (for example ~/apps)
+
+2. Run Example
+
+* Start simple server
+
+```bash
+nc -lk 9999
+```
+
+* Go to spark home directory, and submit app (client mode), e.g.
+
+```bash
+cd ~/apps/spark-2.0.0-bin-hadoop2.7
+
+./bin/spark-submit --master spark://localhost:7077 --class org.apache.spark.examples.streaming.JavaNetworkWordCount ~/apps/spark-2.0.0-bin-hadoop2.7/examples/jars/spark-examples_2.11-2.0.0.jar `ipconfig getifaddr en0` 9999
+```
+
+
 
 
 
